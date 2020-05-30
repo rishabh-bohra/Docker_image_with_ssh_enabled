@@ -1,13 +1,9 @@
 
 FROM centos
-
 # Before building image, Put all these ADD source files in the folder where you run "docker build" command 
 
 ADD ./sshd-keygen /usr/sbin/sshd-keygen
 # Requirement  of  "sshd-keygen" command
-
-ADD ./sshd/ /var/empty/sshd   
-# Requirement of "/usr/sbin/sshd -f /etc/ssh/sshd_config" command 
 
 ADD ./ssh_host_rsa_key /etc/ssh/ssh_host_rsa_key  
 # Requirements of "/usr/sbin/sshd -f /etc/ssh/sshd_config" command 
