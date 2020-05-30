@@ -1,17 +1,20 @@
-
-FROM centos
 # Before building image, Put all these ADD source files in the folder where you run "docker build" command 
 
-ADD ./sshd-keygen /usr/sbin/sshd-keygen
+FROM centos
+
 # Requirement  of  "sshd-keygen" command
+ADD ./sshd-keygen /usr/sbin/sshd-keygen
 
-ADD ./ssh_host_rsa_key /etc/ssh/ssh_host_rsa_key  
 # Requirements of "/usr/sbin/sshd -f /etc/ssh/sshd_config" command 
+ADD ./ssh_host_rsa_key /etc/ssh/ssh_host_rsa_key  
 
-ADD ./functions /etc/rc.d/init.d/functions  
 # Requirements of  "/usr/sbin/sshd -f /etc/ssh/sshd_config" command 
+ADD ./functions /etc/rc.d/init.d/functions  
 
+# Command to install ssh client and server 
 RUN yum install openssh* -y
+
+# Command to install "ifconfig" command
 RUN yum install net-tools -y
 
 # create an user named jenkins
@@ -20,7 +23,7 @@ RUN /usr/sbin/useradd jenkins
 #Set password for jenkins user
 RUN echo jenkins:jenkins | chpasswd 
 
-#set password for root user
+#Set password for root user
 RUN echo root:redhat | chpasswd 
 
 RUN sshd-keygen
