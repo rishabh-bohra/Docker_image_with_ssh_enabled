@@ -13,14 +13,23 @@ ADD ./functions /etc/rc.d/init.d/functions
 
 RUN yum install openssh* -y
 RUN yum install net-tools -y
+
+# create an user named jenkins
 RUN /usr/sbin/useradd jenkins
+
+#Set password for jenkins user
 RUN echo jenkins:jenkins | chpasswd 
+
+#set password for root user
 RUN echo root:redhat | chpasswd 
+
 RUN sshd-keygen
+
+# Changed permission as this file contain our private key and it best practice to make this file unaccessible to others
 RUN chmod 600 /etc/ssh/ssh_host_rsa_key  
 
+#Command to start ssh service on docker container
 RUN echo  "/usr/sbin/sshd -f /etc/ssh/sshd_config" | cat >> /root/.bashrc
-# Changed permission as this file contain our private key and it best practice to make this file unaccessible to others
 
 CMD /bin/bash
 
