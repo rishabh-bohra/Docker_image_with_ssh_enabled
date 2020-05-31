@@ -16,6 +16,9 @@ ADD ./functions /etc/rc.d/init.d/functions
 # Command to install ssh client and server 
 RUN yum install openssh* -y
 
+# Install java (Requirement of jenkins to create client)
+RUN yum install java-1.8.0-openjdk -y
+
 # Command to install "ifconfig" command
 RUN yum install net-tools -y
 
@@ -36,7 +39,7 @@ RUN chmod 600 /etc/ssh/ssh_host_rsa_key
 #Command to start ssh service on docker container
 RUN echo  "/usr/sbin/sshd -f /etc/ssh/sshd_config" | cat >> /root/.bashrc
 
-EXPOSE 22
+#EXPOSE 22
 
 CMD /bin/bash
 
