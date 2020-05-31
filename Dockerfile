@@ -2,6 +2,8 @@
 
 FROM centos
 
+LABEL maintainer="Rishabh Bohra"
+
 # Requirement  of  "sshd-keygen" command
 ADD ./sshd-keygen /usr/sbin/sshd-keygen
 
@@ -33,6 +35,8 @@ RUN chmod 600 /etc/ssh/ssh_host_rsa_key
 
 #Command to start ssh service on docker container
 RUN echo  "/usr/sbin/sshd -f /etc/ssh/sshd_config" | cat >> /root/.bashrc
+
+EXPOSE 22
 
 CMD /bin/bash
 
